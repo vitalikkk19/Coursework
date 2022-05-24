@@ -1,0 +1,243 @@
+\documentclass{beamer}
+
+
+\mode<presentation>
+{
+	\usetheme{Warsaw}
+	% or ...
+	\useoutertheme{infolines}
+	\usefonttheme[]{serif}
+	\setbeamercovered{transparent}
+	% or whatever (possibly just delete it)
+}
+
+\usepackage[cp1251]{inputenc}
+\usepackage[ukrainian]{babel}
+\usepackage{dsfont}
+%\usepackage[pdftex]{graphicx}
+
+%% Sets page size and margins
+%\usepackage[a4paper,margin=2cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage{pstricks}
+\usepackage{pst-all}
+\usepackage{color}
+\usepackage[beamer,customcolors]{hf-tikz}
+%\graphicspath{{image/1}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\newtheorem{defin}{Означення}
+
+\title[Курсова робота]{Порівняння ефективності класів стеганографічних алгоритмів}
+\author[Грициндишин В.Л.]{Грициндишина Віталія Любомировича}
+\date[24 травня 2022 p.]{24 травня 2022 p.}
+\begin{document}
+	\begin{frame}
+		\small 
+		\begin{center}
+			\footnotesize
+			Львівський національний університет імені Івана Франка \\[0.5cm]
+			\includegraphics[scale=.13]{image/2.png} \\
+		\end{center}
+		\maketitle
+		\begin{center}
+			\footnotesize
+	
+		\end{center}
+		
+	\end{frame}
+	%\section*{Курсова робота}
+	%\subsection*{Структура презентації}
+	\section*{Структура презентації}
+	\begin{frame}
+		\tableofcontents
+	\end{frame}
+
+
+	\section{Постановка задачі}
+	
+	\subsection{Актуальність теми}
+	\begin{frame}
+	\centering
+	\includegraphics[scale=.28]{image/ss.png}\\
+	\end{frame}
+
+
+	\subsection{Задача та класифікація стеганографії}
+	\begin{frame}
+	\begin{center}
+		\includegraphics[scale=.25]{image/p1-2p1.png}\\
+		
+	\end{center}
+	\begin{minipage}{.66\textwidth}
+		\centering
+		\includegraphics[scale=.22]{image/p1-2p2.png}\\
+	\end{minipage}
+	\begin{minipage}{.33\textwidth}
+		\centering
+		\includegraphics[scale=.40]{image/1-2-4.png}\\
+	\end{minipage}
+	\end{frame}
+
+
+	\subsection{Математична постановка задачі}
+	\begin{frame}
+		
+			\[E:C\times M\rightarrow S;\label{eq:ref} \eqno(1) \]
+			$$D:S \rightarrow M, \eqno(2)$$
+			$$\sum(C,M,S,E,D) \eqno(3)$$
+
+ 			$$sim[c,E(c,m)] = 1, \forall m \in M, c \in C \eqno(4)$$ 
+			$$ c = max(sim[x,E(x,m)]) \eqno(5)$$
+	
+			$$E(c,m) \approx E(c+\delta,m) \qquad D[E(c,m)] \approx D[E(c+\delta,m)] = m \eqno(6)$$
+		
+		де $S = \{(c_1,m_1),(c_2,m_2),...,(c_q,m_q),\} = \{s_1,s_2,...,s_q\}$ 	- множина стеганограм (заповнених контейнерів), $m_a,m_b \in M$ , 		$(c_a,m_a),(c_b,m_b) \in S$
+
+	\end{frame}
+
+
+	\section{Структури мультимедійних даних}
+	\subsection{Приховування інформації у нерухомих зображеннях}
+	\begin{frame}
+		Деякі методи приховування даних:
+		\begin{itemize}
+			\item Метод заміни найменш значущого біта;
+$$\begin{matrix}
+	(00100111&11101001&11001000)\\
+	(00100111&11001000&11101001)\\
+	(11001000&00100111&11101001)\\
+\end{matrix}$$ 
+ $$\downarrow 10000001 \downarrow$$
+$$\begin{matrix}
+	(00100111&1110100\underline{0}&11001000)\\
+	(0010011\underline{0}&11001000&1110100\underline{0})\\
+	(11001000&00100111&11101001)\\
+\end{matrix}$$
+
+			\item Метод маскування та фільтрації;\\
+
+		\end{itemize}
+
+	\end{frame}
+	\begin{frame}
+\begin{itemize}
+	\item Метод перетворення.;
+\end{itemize}
+	$$F(u,v) = \frac{1}{4} C(u)C(v) \left[\sum\limits_{x=0}^{7} \sum\limits_{y=0}^{7} f(x,y) \cdot \cos \frac{(2x+1)u\pi}{16} \cos \frac{(2y+1)v\pi}{16}\right],$$ де $C(x) = 1/\sqrt{2}$, коли $x=0$ та  $C(x) = 1$ в інших випадках. $$F^Q(u,v) = \left\lfloor  \frac{F(u,v)}{Q(u,v)}\right\rfloor,$$ де $Q(u,v)$ - 64 елементна таблиця квантування.
+
+
+	\end{frame}
+
+	\subsection{Приховування інформації у текстових файлах}
+	\begin{frame}
+	До методів приховування інформації у текстових файлах належать: 
+	\begin{itemize}
+		\item синтаксичні методи;
+		\item семантичні методи, які обумовлюють два синоніми, що відповідають значенням прихованих бітів;
+		\item методи довільного інтервалу.
+	\end{itemize}	
+\begin{center}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{Метод}& \textbf{Знаків стега}&\textbf{Щільність,$\%$}\\
+		\hline
+		Чергування маркерів кінця&267&0.21\\
+		\hline
+		Вирівнювання пробілами&411&0.32\\
+		\hline
+		Двійкові нулі&740&0.58\\
+		\hline
+		Хвостові пропуски&1071&0.85\\
+		\hline
+		Знаки одного накреслення&4065&3.21\\
+		\hline
+	\end{tabular}
+\end{center}
+
+	\end{frame}
+
+
+	\subsection{Приховування інформації в аудіосигналах}
+	\begin{frame}
+	Методів приховування інформації в аудіосигналах:
+	\begin{itemize}
+	\item заміни найменш значущого біта;
+	\item фазового кодування;
+	\item розширення спектру;
+	\item приховування інформації за допомогою вставки тонів;
+	\item приховування інформації використовуючи ехо-сигнал.
+	\end{itemize}
+	\end{frame}
+
+	\subsection{Оцінка ефективності стеганоситеми}
+	\begin{frame}
+		\begin{minipage}{.50\textwidth}
+			\centering
+			\includegraphics[scale=.19]{image/p2-5p1.png}\\
+		\end{minipage}
+		\begin{minipage}{.49\textwidth}
+			$$IF =1 - \dfrac{\sum\limits_{x=1}^{n} \sum\limits_{y=1}^{m}(C_{x,y}- S_{x,y})^2}{\sum\limits_{x=1}^{n} \sum\limits_{y=1}^{m}(C_{x,y})^2};$$
+			$$NAD = \dfrac{\sum\limits_{x=1}^{n} \sum\limits_{y=1}^{m}|C_{x,y} - S_{x,y}|}{\sum\limits_{x=1}^{n} \sum\limits_{y=1}^{m}|C_{x,y}|};$$
+		\end{minipage}
+	
+	\begin{minipage}{.50\textwidth}
+		$$SNR = \dfrac{\sum\limits_{x=1}^{n} \sum\limits_{y=1}^{m}(C_{x,y})^2}{\sum\limits_{x=1}^{n} \sum\limits_{y=1}^{m}(C_{x,y} - S_{x,y})^2};$$
+	\end{minipage}
+	\begin{minipage}{.49\textwidth}
+		$$AD = \dfrac{1}{X \cdot Y} \sum\limits_{x=1}^{n} \sum\limits_{y=1}^{m}|C_{x,y} - S_{x,y}| $$
+		$$MSE = \dfrac{1}{X \cdot Y} \sum\limits_{x=1}^{n} \sum\limits_{y=1}^{m}(C_{x,y} - S_{x,y})^2 $$
+	\end{minipage}
+
+	\end{frame}
+
+
+	\section{Приклади застовування}
+	\subsection[Метод заміни НЗБ в BMP форматі]{Приховування даних в BMP форматі методом заміни найменш значущого біта}
+	\begin{frame}
+ \begin{center}
+	\includegraphics[scale=.21]{image/program.png}\\
+	\includegraphics[scale=.18]{image/pr_tabl.png}\\
+	\includegraphics[scale=.21]{image/prdif.png}\\
+	{\footnotesize Розмір зображення: 1280$\times$853}
+\end{center}
+	\end{frame}
+
+	\section{Висновки}
+	\begin{frame}
+	\begin{itemize}
+		\item Стеганографія в поєднанні з криптографією, є потужним захистом інформації.
+		\item Метою стеганографічних алгоритмів є забезпечити  приховування факту наявності даних, що потребують захисту.
+		\item Надійними алгоритмами захисту даних в зображеннях є алгоритми маскування та перетворення.
+		\item Найбільш надійним для захисту даних в текстових форматах є метод знаків одного накреслення.
+		\item Для аудіо-форматів найефективнішим вважають метод заміни найменш значущого біта. 
+		\item Метод ЗНЗБ для приховування даних в BMP форматі є простим та може приховувати великий об'єм даних.
+		\item Якщо збільшити розмір вбудованих даних, то погіршиться якість зображення.
+	\end{itemize}
+	\end{frame}
+
+	\section*{ЛНУ імені Івана Франка}
+	\subsection*{Кафедра обчислювальної математики}
+	\begin{frame}
+	%\vspace{1cm}\hspace*{1cm}\large{Дякую за увагу!}
+	\begin{center}
+		\Large{Дякую за увагу!} \\[1cm]
+		\normalsize
+				\begin{center}
+			\includegraphics[scale=.0125]{image/ghl.png}\\[0.2cm]
+			\url{https://github.com/vitalikkk19/Coursework}
+		\end{center}
+	\end{center}
+	\end{frame}
+
+\end{document}
